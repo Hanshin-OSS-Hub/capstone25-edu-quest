@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public float maxSpeed;
     public float jumpPower;
+    public int code = 0;
+    public GameObject nextPotal;
     Rigidbody2D rigid;
     SpriteRenderer sprend;
     Animator anim;
@@ -77,11 +80,22 @@ public class Player : MonoBehaviour
         {
             item_audio.Play();
             collision.gameObject.SetActive(false);
+            code++;
+
+            if(code >= 6)
+            {
+                ActivatePotal();
+            }
         }
+
         else if(collision.tag == "Potal")
         {
             SceneManager.LoadScene("Exam");
         }
 
+        void ActivatePotal()
+        {
+            nextPotal.SetActive(true);
+        }
     }
 }
