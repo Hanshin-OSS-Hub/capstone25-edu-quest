@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -97,5 +98,6 @@ public class Player : MonoBehaviour
         {
             nextPotal.SetActive(true);
         }
+
     }
 }
