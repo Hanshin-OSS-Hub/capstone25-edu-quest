@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     public float jumpPower;
     public int code = 0;
     public GameObject nextPotal;
+    public TMP_Text messageText;
+    public TMP_Text PotalOpenText;
     Rigidbody2D rigid;
     SpriteRenderer sprend;
     Animator anim;
@@ -23,6 +25,11 @@ public class Player : MonoBehaviour
         sprend = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         item_audio = GetComponent<AudioSource>();
+
+        if (PotalOpenText != null)
+        {
+            PotalOpenText.gameObject.SetActive(false);
+        }
     }
 
     void FixedUpdate()
@@ -65,7 +72,7 @@ public class Player : MonoBehaviour
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         }
 
-        if(Mathf.Abs(rigid.velocity.y) <0.1)  // 속도 값이 0에 가까우면 isJump false
+        if(Mathf.Abs(rigid.velocity.y) < 0.1)  // 속도 값이 0에 가까우면 isJump false
         {
             anim.SetBool("isJump", false);
         }
@@ -75,7 +82,18 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void ShowMessage(string message)
+    {
+        messageText.text = message;
+        messageText.gameObject.SetActive(true);
+    }
+
+    void HideMessage()
+    {
+        messageText.gameObject.SetActive(false);
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Code")
         {
@@ -91,13 +109,53 @@ public class Player : MonoBehaviour
 
         else if(collision.tag == "Potal")
         {
-            SceneManager.LoadScene("Exam");
+            SceneManager.LoadScene("MainStage");
         }
 
         void ActivatePotal()
         {
             nextPotal.SetActive(true);
+            PotalOpenText.gameObject.SetActive(true);
+            if(collision.gameObject.tag == "nextPotal")
+            {
+                collision.gameObject.SetActive(true);
+            }
+
         }
 
+        if (collision.CompareTag("print"))
+        {
+            Transform text = collision.transform.Find("Exam");
+            if (text != null)
+                text.gameObject.SetActive(true);
+        }
+
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("monster"))
+        {
+            anim.SetBool("isHurt", true);
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("monster"))
+        {
+            anim.SetBool("isHurt", false);
+        }
+    }
+
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("print"))
+        {
+            Transform text = collision.transform.Find("Exam");
+            if (text != null)
+                text.gameObject.SetActive(false);
+        }
     }
 }
