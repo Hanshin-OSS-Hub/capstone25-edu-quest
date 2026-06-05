@@ -1,0 +1,28 @@
+# Large files
+Frontend-main.zip
+Frontend-main/public/unity/EduQuest/Build/*.br
+Frontend-main/public/unity/EduQuest/Build/*.wasm
+Frontend-main/public/unity/EduQuest/Build/*.js
+
+# Dependencies
+node_modules/
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

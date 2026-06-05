@@ -1,0 +1,25 @@
+package com.eduquest.backend.presentation.learning.dto.request;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import tools.jackson.databind.JsonNode;
+
+import java.util.List;
+
+public record ProblemUpdateRequest(
+		@JsonProperty("stage_uuid")
+		@NotBlank(message = "stage UUID는 필수 입니다.") String stageUuid,
+		@NotBlank(message = "문제 타입은 필수 입니다.")
+		@Pattern(regexp = "(?i)^\\s*(basic|typing|ordering|final|code)\\s*$", message = "문제 타입은 basic, typing, ordering, final 중 하나여야 합니다.")
+		String type,
+		@NotNull(message = "문제 번호는 필수 입니다.") Integer number,
+		@NotBlank(message = "요약은 필수 입니다.") String summary,
+		@NotBlank(message = "예시는 필수 입니다.") String example,
+		@NotBlank(message = "예상 출력은 필수 입니다.") String expectedOutput,
+		JsonNode block,
+		@NotNull(message = "힌트 목록은 필수 입니다.") List<HintRequest> hints
+) {
+
+}

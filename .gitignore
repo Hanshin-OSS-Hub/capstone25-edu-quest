@@ -1,0 +1,13 @@
+.env
+.env.*
+prod.env
+env
+backend/env
+backend/prod.env
+Frontend/Frontend-main/.env
+backend/.gradle/
+backend/garage-data/
+backend/garage-meta/
+backend/garage.toml
+.DS_Store
+**/.DS_Store
